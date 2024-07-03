@@ -7,7 +7,9 @@ Bu, C# ile geliştirilen özelleştirilebilir bir nişangâh kaplama uygulaması
 
 # Setup
 The setup file if you want to download the app directly.
+
 Uygulamayı doğrudan indirmek istiyorsanız kurulum dosyası.
+
 [EmreCrosshairSetup.msi](https://github.com/qweemree/EmreCrosshair/raw/main/Setup/ECSetup.msi)
 
 # Features / Özellikler
