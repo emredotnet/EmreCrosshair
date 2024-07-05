@@ -1,6 +1,6 @@
 # EmreCrosshair
 # Crosshair Application / Nişangâh Uygulaması
-![image](https://github.com/qweemree/EmreCrosshair/assets/164534188/12dab40e-d9b1-4bfa-946f-5eb0fb108ddc)
+![image](https://github.com/qweemree/EmreCrosshair/assets/164534188/7c6db0fd-cb7e-42fc-8e7a-fdeebbe3afde)
 
 This is a customizable crosshair overlay application developed in C#. It allows users to create a crosshair overlay on their screen with various customization options, including size, color, thickness, gap, border, and opacity.
 
