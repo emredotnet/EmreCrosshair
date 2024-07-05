@@ -7,15 +7,17 @@ namespace CrosshairCsharp
     public partial class EmreCrosshair : Form
     {
         int crosshairSize, gap, crosshair_kalinlik, border_kalinlik; // Crosshair parameters
+        bool top,bottom,left,right;
         Color renk; // Crosshair color
 
-        public EmreCrosshair(int size, int gap1, int kalinlik, Color renk, int border, double opaklik)
+        public EmreCrosshair(int size, int gap1, int kalinlik, Color renk, int border, double opaklik, bool t , bool b , bool l , bool r)
         {
             InitializeComponent();
             crosshairSize = size;
             gap = gap1;
             crosshair_kalinlik = kalinlik;
             border_kalinlik = border;
+            top = t; bottom=b; left = l; right = r;
             this.Opacity = opaklik;
             this.renk = renk;
             InitializeOverlay();
@@ -74,20 +76,20 @@ namespace CrosshairCsharp
             if (border_kalinlik != 0)
             {
                 // Draw horizontal lines (border)
-                g.DrawLine(borderPen, centerX - crosshairSize - gap - border_kalinlik / 2, centerY, centerX - gap + border_kalinlik / 2, centerY); // Left horizontal line (border)
-                g.DrawLine(borderPen, centerX + gap - border_kalinlik / 2, centerY, centerX + crosshairSize + gap + border_kalinlik / 2, centerY); // Right horizontal line (border)
+                if (left) g.DrawLine(borderPen, centerX - crosshairSize - gap - border_kalinlik / 2, centerY, centerX - gap + border_kalinlik / 2, centerY); // Left horizontal line (border)
+                if (right) g.DrawLine(borderPen, centerX + gap - border_kalinlik / 2, centerY, centerX + crosshairSize + gap + border_kalinlik / 2, centerY); // Right horizontal line (border)
 
                 // Draw vertical lines (border)
-                g.DrawLine(borderPen, centerX, centerY - crosshairSize - gap - border_kalinlik / 2, centerX, centerY - gap + border_kalinlik / 2); // Top vertical line (border)
-                g.DrawLine(borderPen, centerX, centerY + gap - border_kalinlik / 2, centerX, centerY + crosshairSize + gap + border_kalinlik / 2); // Bottom vertical line (border)
+                if (top) g.DrawLine(borderPen, centerX, centerY - crosshairSize - gap - border_kalinlik / 2, centerX, centerY - gap + border_kalinlik / 2); // Top vertical line (border)
+                if (bottom) g.DrawLine(borderPen, centerX, centerY + gap - border_kalinlik / 2, centerX, centerY + crosshairSize + gap + border_kalinlik / 2); // Bottom vertical line (border)
             }
 
             // Draw crosshair
-            g.DrawLine(pen, centerX - crosshairSize - gap, centerY, centerX - gap, centerY); // Left horizontal line
-            g.DrawLine(pen, centerX + gap, centerY, centerX + crosshairSize + gap, centerY); // Right horizontal line
+            if (left) g.DrawLine(pen, centerX - crosshairSize - gap, centerY, centerX - gap, centerY); // Left horizontal line
+            if (right) g.DrawLine(pen, centerX + gap, centerY, centerX + crosshairSize + gap, centerY); // Right horizontal line
 
-            g.DrawLine(pen, centerX, centerY - crosshairSize - gap, centerX, centerY - gap); // Top vertical line
-            g.DrawLine(pen, centerX, centerY + gap, centerX, centerY + crosshairSize + gap); // Bottom vertical line
+            if (top) g.DrawLine(pen, centerX, centerY - crosshairSize - gap, centerX, centerY - gap); // Top vertical line
+            if (bottom) g.DrawLine(pen, centerX, centerY + gap, centerX, centerY + crosshairSize + gap); // Bottom vertical line
         }
 
         /// <summary>

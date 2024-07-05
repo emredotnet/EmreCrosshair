@@ -61,6 +61,10 @@
             kalinliklabel = new Label();
             kalinliktrack = new TrackBar();
             CrosshairGB = new GroupBox();
+            rbutton = new Button();
+            lbutton = new Button();
+            bottombutton = new Button();
+            topbutton = new Button();
             lgbutton = new Button();
             label4 = new Label();
             opaklabel = new Label();
@@ -84,7 +88,7 @@
             // 
             // startbutton
             // 
-            startbutton.Location = new Point(625, 189);
+            startbutton.Location = new Point(731, 189);
             startbutton.Name = "startbutton";
             startbutton.Size = new Size(121, 32);
             startbutton.TabIndex = 0;
@@ -115,7 +119,7 @@
             // emrelabel
             // 
             emrelabel.AutoSize = true;
-            emrelabel.Location = new Point(583, 171);
+            emrelabel.Location = new Point(689, 171);
             emrelabel.Name = "emrelabel";
             emrelabel.Size = new Size(83, 15);
             emrelabel.TabIndex = 3;
@@ -184,7 +188,7 @@
             ColorGB.Controls.Add(radioButton2);
             ColorGB.Location = new Point(329, 12);
             ColorGB.Name = "ColorGB";
-            ColorGB.Size = new Size(509, 280);
+            ColorGB.Size = new Size(666, 280);
             ColorGB.TabIndex = 8;
             ColorGB.TabStop = false;
             ColorGB.Text = "Color";
@@ -252,7 +256,7 @@
             rgbtrackG.Location = new Point(194, 145);
             rgbtrackG.Maximum = 255;
             rgbtrackG.Name = "rgbtrackG";
-            rgbtrackG.Size = new Size(300, 45);
+            rgbtrackG.Size = new Size(453, 45);
             rgbtrackG.TabIndex = 12;
             rgbtrackG.Scroll += rgbtrackG_Scroll;
             // 
@@ -262,7 +266,7 @@
             rgbtrackB.Location = new Point(194, 218);
             rgbtrackB.Maximum = 255;
             rgbtrackB.Name = "rgbtrackB";
-            rgbtrackB.Size = new Size(300, 45);
+            rgbtrackB.Size = new Size(453, 45);
             rgbtrackB.TabIndex = 11;
             rgbtrackB.Scroll += rgbtrackB_Scroll;
             // 
@@ -272,7 +276,7 @@
             rgbtrackR.Location = new Point(194, 80);
             rgbtrackR.Maximum = 255;
             rgbtrackR.Name = "rgbtrackR";
-            rgbtrackR.Size = new Size(300, 45);
+            rgbtrackR.Size = new Size(453, 45);
             rgbtrackR.TabIndex = 10;
             rgbtrackR.Scroll += rgbtrackR_Scroll;
             // 
@@ -386,6 +390,10 @@
             // 
             // CrosshairGB
             // 
+            CrosshairGB.Controls.Add(rbutton);
+            CrosshairGB.Controls.Add(lbutton);
+            CrosshairGB.Controls.Add(bottombutton);
+            CrosshairGB.Controls.Add(topbutton);
             CrosshairGB.Controls.Add(lgbutton);
             CrosshairGB.Controls.Add(label4);
             CrosshairGB.Controls.Add(opaklabel);
@@ -406,14 +414,54 @@
             CrosshairGB.Controls.Add(gaptrack);
             CrosshairGB.Location = new Point(12, 298);
             CrosshairGB.Name = "CrosshairGB";
-            CrosshairGB.Size = new Size(826, 242);
+            CrosshairGB.Size = new Size(983, 242);
             CrosshairGB.TabIndex = 17;
             CrosshairGB.TabStop = false;
             CrosshairGB.Text = "Crosshair";
             // 
+            // rbutton
+            // 
+            rbutton.BackColor = Color.Lime;
+            rbutton.Location = new Point(924, 75);
+            rbutton.Name = "rbutton";
+            rbutton.Size = new Size(40, 18);
+            rbutton.TabIndex = 25;
+            rbutton.UseVisualStyleBackColor = false;
+            rbutton.Click += rbutton_Click;
+            // 
+            // lbutton
+            // 
+            lbutton.BackColor = Color.Lime;
+            lbutton.Location = new Point(848, 75);
+            lbutton.Name = "lbutton";
+            lbutton.Size = new Size(40, 18);
+            lbutton.TabIndex = 24;
+            lbutton.UseVisualStyleBackColor = false;
+            lbutton.Click += lbutton_Click;
+            // 
+            // bottombutton
+            // 
+            bottombutton.BackColor = Color.Lime;
+            bottombutton.Location = new Point(898, 101);
+            bottombutton.Name = "bottombutton";
+            bottombutton.Size = new Size(17, 44);
+            bottombutton.TabIndex = 23;
+            bottombutton.UseVisualStyleBackColor = false;
+            bottombutton.Click += bottombutton_Click;
+            // 
+            // topbutton
+            // 
+            topbutton.BackColor = Color.Lime;
+            topbutton.Location = new Point(898, 26);
+            topbutton.Name = "topbutton";
+            topbutton.Size = new Size(17, 44);
+            topbutton.TabIndex = 22;
+            topbutton.UseVisualStyleBackColor = false;
+            topbutton.Click += topbutton_Click;
+            // 
             // lgbutton
             // 
-            lgbutton.Location = new Point(498, 189);
+            lgbutton.Location = new Point(604, 189);
             lgbutton.Name = "lgbutton";
             lgbutton.Size = new Size(121, 32);
             lgbutton.TabIndex = 21;
@@ -498,7 +546,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(843, 544);
+            ClientSize = new Size(1000, 542);
             Controls.Add(crosshairpanel1);
             Controls.Add(CrosshairGB);
             Controls.Add(ColorGB);
@@ -565,5 +613,9 @@
         private TrackBar opaktrack;
         private Label label4;
         private Button lgbutton;
+        private Button rbutton;
+        private Button lbutton;
+        private Button bottombutton;
+        private Button topbutton;
     }
 }

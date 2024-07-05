@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Security.Cryptography.Pkcs;
 using System.Windows.Forms;
 
 namespace CrosshairCsharp
@@ -10,7 +11,7 @@ namespace CrosshairCsharp
         int border, size, gap, kalinlik; // Crosshair parameters
         double opaklik; // Crosshair opacity
         byte R, G, B; // RGB values for custom color
-
+        bool top = true, bottom = true, right = true, left = true;
         public MainFormEmreCrosshair()
         {
             InitializeComponent();
@@ -51,7 +52,7 @@ namespace CrosshairCsharp
                 if (bordercheck.Checked) { border = bordertrack.Value; }
                 else border = 0;
 
-                EmreCrosshair crosshairform = new EmreCrosshair(size, gap, kalinlik, renk, border, opaklik);
+                EmreCrosshair crosshairform = new EmreCrosshair(size, gap, kalinlik, renk, border, opaklik,top,bottom,left,right);
                 crosshairform.Show();
                 this.Hide();
             }
@@ -91,6 +92,16 @@ namespace CrosshairCsharp
                 }
             }
             this.Show();
+        }
+
+        bool crosslineselect(Control p2)
+        {
+            if (p2.BackColor == Color.Lime)
+            {
+                p2.BackColor = Color.Red;
+                return false;
+            }
+            else p2.BackColor = Color.Lime; return true;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -240,20 +251,19 @@ namespace CrosshairCsharp
             if (border != 0)
             {
                 // Draw horizontal lines (border)
-                g.DrawLine(borderPen, centerX - size - gap - border / 2, centerY, centerX - gap + border / 2, centerY); // Left horizontal line (border)
-                g.DrawLine(borderPen, centerX + gap - border / 2, centerY, centerX + size + gap + border / 2, centerY); // Right horizontal line (border)
+                if (lbutton.BackColor == Color.Lime) g.DrawLine(borderPen, centerX - size - gap - border / 2, centerY, centerX - gap + border / 2, centerY); // Left horizontal line (border)
+                if (rbutton.BackColor == Color.Lime) g.DrawLine(borderPen, centerX + gap - border / 2, centerY, centerX + size + gap + border / 2, centerY); // Right horizontal line (border)
 
                 // Draw vertical lines (border)
-                g.DrawLine(borderPen, centerX, centerY - size - gap - border / 2, centerX, centerY - gap + border / 2); // Top vertical line (border)
-                g.DrawLine(borderPen, centerX, centerY + gap - border / 2, centerX, centerY + size + gap + border / 2); // Bottom vertical line (border)
+                if (topbutton.BackColor == Color.Lime) g.DrawLine(borderPen, centerX, centerY - size - gap - border / 2, centerX, centerY - gap + border / 2); // Top vertical line (border)
+                if (bottombutton.BackColor == Color.Lime) g.DrawLine(borderPen, centerX, centerY + gap - border / 2, centerX, centerY + size + gap + border / 2); // Bottom vertical line (border)
             }
 
             // Draw crosshair
-            g.DrawLine(pen, centerX - size - gap, centerY, centerX - gap, centerY); // Left horizontal line
-            g.DrawLine(pen, centerX + gap, centerY, centerX + size + gap, centerY); // Right horizontal line
-
-            g.DrawLine(pen, centerX, centerY - size - gap, centerX, centerY - gap); // Top vertical line
-            g.DrawLine(pen, centerX, centerY + gap, centerX, centerY + size + gap); // Bottom vertical line
+            if (lbutton.BackColor == Color.Lime) g.DrawLine(pen, centerX - size - gap, centerY, centerX - gap, centerY); // Left horizontal line
+            if (rbutton.BackColor == Color.Lime) g.DrawLine(pen, centerX + gap, centerY, centerX + size + gap, centerY); // Right horizontal line
+            if (topbutton.BackColor == Color.Lime) g.DrawLine(pen, centerX, centerY - size - gap, centerX, centerY - gap); // Top vertical line
+            if (bottombutton.BackColor == Color.Lime) g.DrawLine(pen, centerX, centerY + gap, centerX, centerY + size + gap); // Bottom vertical line
         }
 
         private void lgbutton_Click(object sender, EventArgs e)
@@ -294,6 +304,30 @@ namespace CrosshairCsharp
                 label6.Text = "Green";
                 label7.Text = "Blue";
             }
+        }
+
+        private void topbutton_Click(object sender, EventArgs e)
+        {
+            top = crosslineselect(topbutton);
+            crossguncelle();
+        }
+
+        private void bottombutton_Click(object sender, EventArgs e)
+        {
+            bottom = crosslineselect(bottombutton);
+            crossguncelle();
+        }
+
+        private void lbutton_Click(object sender, EventArgs e)
+        {
+            left = crosslineselect(lbutton);
+            crossguncelle();
+        }
+
+        private void rbutton_Click(object sender, EventArgs e)
+        {
+            right = crosslineselect(rbutton);
+            crossguncelle();
         }
     }
 }
