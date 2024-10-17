@@ -35,9 +35,6 @@
             label1 = new Label();
             emrelabel = new Label();
             sizelabel = new Label();
-            radioButton1 = new RadioButton();
-            radioButton2 = new RadioButton();
-            radioButton3 = new RadioButton();
             ColorGB = new GroupBox();
             label7 = new Label();
             label6 = new Label();
@@ -48,8 +45,6 @@
             rgbtrackG = new TrackBar();
             rgbtrackB = new TrackBar();
             rgbtrackR = new TrackBar();
-            radioButton5 = new RadioButton();
-            radioButton4 = new RadioButton();
             notifyIcon1 = new NotifyIcon(components);
             Menu = new ContextMenuStrip(components);
             crosshairToolStripMenuItem = new ToolStripMenuItem();
@@ -104,7 +99,7 @@
             uzunluktrack.Name = "uzunluktrack";
             uzunluktrack.Size = new Size(349, 45);
             uzunluktrack.TabIndex = 1;
-            uzunluktrack.Value = 5;
+            uzunluktrack.Value = 1;
             uzunluktrack.Scroll += trackBar1_Scroll;
             // 
             // label1
@@ -135,41 +130,6 @@
             sizelabel.TabIndex = 4;
             sizelabel.Text = "0";
             // 
-            // radioButton1
-            // 
-            radioButton1.AutoSize = true;
-            radioButton1.Checked = true;
-            radioButton1.Location = new Point(18, 22);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(45, 19);
-            radioButton1.TabIndex = 5;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Red";
-            radioButton1.UseVisualStyleBackColor = true;
-            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
-            // 
-            // radioButton2
-            // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(18, 64);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(56, 19);
-            radioButton2.TabIndex = 6;
-            radioButton2.Text = "Green";
-            radioButton2.UseVisualStyleBackColor = true;
-            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
-            // 
-            // radioButton3
-            // 
-            radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(18, 115);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(53, 19);
-            radioButton3.TabIndex = 7;
-            radioButton3.Text = "Black";
-            radioButton3.UseVisualStyleBackColor = true;
-            radioButton3.CheckedChanged += radioButton3_CheckedChanged;
-            // 
             // ColorGB
             // 
             ColorGB.Controls.Add(label7);
@@ -181,11 +141,6 @@
             ColorGB.Controls.Add(rgbtrackG);
             ColorGB.Controls.Add(rgbtrackB);
             ColorGB.Controls.Add(rgbtrackR);
-            ColorGB.Controls.Add(radioButton5);
-            ColorGB.Controls.Add(radioButton4);
-            ColorGB.Controls.Add(radioButton1);
-            ColorGB.Controls.Add(radioButton3);
-            ColorGB.Controls.Add(radioButton2);
             ColorGB.Location = new Point(329, 12);
             ColorGB.Name = "ColorGB";
             ColorGB.Size = new Size(666, 280);
@@ -196,7 +151,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(171, 193);
+            label7.Location = new Point(9, 171);
             label7.Name = "label7";
             label7.Size = new Size(30, 15);
             label7.TabIndex = 18;
@@ -205,7 +160,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(174, 119);
+            label6.Location = new Point(12, 97);
             label6.Name = "label6";
             label6.Size = new Size(38, 15);
             label6.TabIndex = 17;
@@ -214,7 +169,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(171, 52);
+            label5.Location = new Point(9, 30);
             label5.Name = "label5";
             label5.Size = new Size(27, 15);
             label5.TabIndex = 16;
@@ -224,7 +179,7 @@
             // 
             labelBlue.AutoSize = true;
             labelBlue.Font = new Font("Segoe UI", 12F);
-            labelBlue.Location = new Point(171, 218);
+            labelBlue.Location = new Point(6, 196);
             labelBlue.Name = "labelBlue";
             labelBlue.Size = new Size(19, 21);
             labelBlue.TabIndex = 15;
@@ -234,7 +189,7 @@
             // 
             labelGreen.AutoSize = true;
             labelGreen.Font = new Font("Segoe UI", 12F);
-            labelGreen.Location = new Point(171, 145);
+            labelGreen.Location = new Point(6, 123);
             labelGreen.Name = "labelGreen";
             labelGreen.Size = new Size(19, 21);
             labelGreen.TabIndex = 14;
@@ -244,7 +199,7 @@
             // 
             labelRed.AutoSize = true;
             labelRed.Font = new Font("Segoe UI", 12F);
-            labelRed.Location = new Point(171, 80);
+            labelRed.Location = new Point(6, 58);
             labelRed.Name = "labelRed";
             labelRed.Size = new Size(19, 21);
             labelRed.TabIndex = 13;
@@ -252,55 +207,30 @@
             // 
             // rgbtrackG
             // 
-            rgbtrackG.Enabled = false;
-            rgbtrackG.Location = new Point(194, 145);
+            rgbtrackG.Location = new Point(32, 123);
             rgbtrackG.Maximum = 255;
             rgbtrackG.Name = "rgbtrackG";
-            rgbtrackG.Size = new Size(453, 45);
+            rgbtrackG.Size = new Size(627, 45);
             rgbtrackG.TabIndex = 12;
             rgbtrackG.Scroll += rgbtrackG_Scroll;
             // 
             // rgbtrackB
             // 
-            rgbtrackB.Enabled = false;
-            rgbtrackB.Location = new Point(194, 218);
+            rgbtrackB.Location = new Point(32, 196);
             rgbtrackB.Maximum = 255;
             rgbtrackB.Name = "rgbtrackB";
-            rgbtrackB.Size = new Size(453, 45);
+            rgbtrackB.Size = new Size(627, 45);
             rgbtrackB.TabIndex = 11;
             rgbtrackB.Scroll += rgbtrackB_Scroll;
             // 
             // rgbtrackR
             // 
-            rgbtrackR.Enabled = false;
-            rgbtrackR.Location = new Point(194, 80);
+            rgbtrackR.Location = new Point(32, 58);
             rgbtrackR.Maximum = 255;
             rgbtrackR.Name = "rgbtrackR";
-            rgbtrackR.Size = new Size(453, 45);
+            rgbtrackR.Size = new Size(627, 45);
             rgbtrackR.TabIndex = 10;
             rgbtrackR.Scroll += rgbtrackR_Scroll;
-            // 
-            // radioButton5
-            // 
-            radioButton5.AutoSize = true;
-            radioButton5.Location = new Point(171, 22);
-            radioButton5.Name = "radioButton5";
-            radioButton5.Size = new Size(47, 19);
-            radioButton5.TabIndex = 9;
-            radioButton5.Text = "RGB";
-            radioButton5.UseVisualStyleBackColor = true;
-            radioButton5.CheckedChanged += radioButton5_CheckedChanged;
-            // 
-            // radioButton4
-            // 
-            radioButton4.AutoSize = true;
-            radioButton4.Location = new Point(18, 173);
-            radioButton4.Name = "radioButton4";
-            radioButton4.Size = new Size(93, 19);
-            radioButton4.TabIndex = 8;
-            radioButton4.Text = "Spring Green";
-            radioButton4.UseVisualStyleBackColor = true;
-            radioButton4.CheckedChanged += radioButton4_CheckedChanged;
             // 
             // notifyIcon1
             // 
@@ -536,6 +466,7 @@
             // 
             // crosshairpanel1
             // 
+            crosshairpanel1.BackColor = Color.White;
             crosshairpanel1.BorderStyle = BorderStyle.FixedSingle;
             crosshairpanel1.Location = new Point(12, 12);
             crosshairpanel1.Name = "crosshairpanel1";
@@ -579,11 +510,7 @@
         private Label label1;
         private Label emrelabel;
         private Label sizelabel;
-        private RadioButton radioButton1;
-        private RadioButton radioButton2;
-        private RadioButton radioButton3;
         private GroupBox ColorGB;
-        private RadioButton radioButton4;
         private NotifyIcon notifyIcon1;
         private ContextMenuStrip Menu;
         private ToolStripMenuItem exitToolStripMenuItem;
@@ -597,7 +524,6 @@
         private TrackBar rgbtrackG;
         private TrackBar rgbtrackB;
         private TrackBar rgbtrackR;
-        private RadioButton radioButton5;
         private Label labelBlue;
         private Label labelGreen;
         private Label labelRed;

@@ -1,7 +1,9 @@
 using System;
+using System.IO;
 using System.Drawing;
 using System.Security.Cryptography.Pkcs;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace CrosshairCsharp
 {
@@ -11,30 +13,47 @@ namespace CrosshairCsharp
         int border, size, gap, kalinlik; // Crosshair parameters
         double opaklik; // Crosshair opacity
         byte R, G, B; // RGB values for custom color
-        bool top = true, bottom = true, right = true, left = true;
+        bool top = true, bottom = true, right = true, left = true, borderc = false;
+        private string appDataPath;
+        private string configPath;
         public MainFormEmreCrosshair()
         {
             InitializeComponent();
+            crosshairpanel1.GetType().InvokeMember("DoubleBuffered",
+            System.Reflection.BindingFlags.SetProperty |
+            System.Reflection.BindingFlags.Instance |
+            System.Reflection.BindingFlags.NonPublic,
+            null, crosshairpanel1, new object[] { true });
+
+            crosshairpanel1.Paint += CrosshairPanel_Paint;
+
+            appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "EmreCrosshair");
+            configPath = Path.Combine(appDataPath, "Cross.config");
+
+            // Klasör yoksa oluþtur
+            if (!Directory.Exists(appDataPath))
+            {
+                Directory.CreateDirectory(appDataPath);
+            }
+
+            // Config dosyasý yoksa oluþtur
+            if (!File.Exists(configPath))
+            {
+                CreateDefaultConfig();
+            }
+
         }
 
         /// <summary>
         /// Determines the color of the crosshair based on the selected radio button.
         /// </summary>
         /// <returns>True if a color is selected.</returns>
-        private bool radiocheck()
+        private bool colorcheck()
         {
-            if (radioButton1.Checked) { renk = Color.Red; }
-            else if (radioButton2.Checked) { renk = Color.Lime; }
-            else if (radioButton3.Checked) { renk = Color.Black; }
-            else if (radioButton4.Checked) { renk = Color.SpringGreen; }
-            else if (radioButton5.Checked)
-            {
-                R = Convert.ToByte(rgbtrackR.Value);
-                G = Convert.ToByte(rgbtrackG.Value);
-                B = Convert.ToByte(rgbtrackB.Value);
-                renk = Color.FromArgb(255, R, G, B);
-            }
-
+            R = Convert.ToByte(rgbtrackR.Value);
+            G = Convert.ToByte(rgbtrackG.Value);
+            B = Convert.ToByte(rgbtrackB.Value);
+            renk = Color.FromArgb(255, R, G, B);
             return true;
         }
 
@@ -43,7 +62,7 @@ namespace CrosshairCsharp
         /// </summary>
         private void startbutton_Click(object sender, EventArgs e)
         {
-            if (radiocheck())
+            if (colorcheck())
             {
                 size = uzunluktrack.Value;
                 gap = gaptrack.Value;
@@ -63,7 +82,18 @@ namespace CrosshairCsharp
         /// </summary>
         private void crossguncelle()
         {
-            if (radiocheck())
+            appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "EmreCrosshair");
+            configPath = Path.Combine(appDataPath, "Cross.config");
+            try
+            {
+                if (File.Exists(configPath))
+                {
+                    SaveConfig();
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            
+            if (colorcheck())
             {
                 size = uzunluktrack.Value;
                 gap = gaptrack.Value;
@@ -71,11 +101,7 @@ namespace CrosshairCsharp
                 opaklik = opaktrack.Value / 100.0;
                 if (bordercheck.Checked) { border = bordertrack.Value; }
                 else border = 0;
-
-                // Clear and redraw the panel
-                crosshairpanel1.Paint -= CrosshairPanel_Paint;
-                crosshairpanel1.Paint += (s, pe) => DrawCrosshair(pe.Graphics, size, gap, kalinlik, renk, border);
-                crosshairpanel1.Invalidate(); // Invalidate panel to redraw
+                crosshairpanel1.Invalidate();
             }
         }
 
@@ -123,9 +149,6 @@ namespace CrosshairCsharp
 
         private void radioButton5_CheckedChanged(object sender, EventArgs e)
         {
-            rgbtrackR.Enabled = radioButton5.Checked;
-            rgbtrackG.Enabled = radioButton5.Checked;
-            rgbtrackB.Enabled = radioButton5.Checked;
             crossguncelle();
         }
 
@@ -188,12 +211,58 @@ namespace CrosshairCsharp
 
         private void MainFormEmreCrosshair_Load(object sender, EventArgs e)
         {
+            
+            try
+            {
+                ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configPath };
+                Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
+
+                int red = int.Parse(config.AppSettings.Settings["CrosshairColorR"].Value);
+                int green = int.Parse(config.AppSettings.Settings["CrosshairColorG"].Value);
+                int blue = int.Parse(config.AppSettings.Settings["CrosshairColorB"].Value);
+                renk = Color.FromArgb(255, red, green, blue);
+
+                size = int.Parse(config.AppSettings.Settings["Size"].Value);
+                gap = int.Parse(config.AppSettings.Settings["Gap"].Value);
+                kalinlik = int.Parse(config.AppSettings.Settings["Thickness"].Value);
+                opaklik = double.Parse(config.AppSettings.Settings["Opacity"].Value);
+                border = int.Parse(config.AppSettings.Settings["Border"].Value);
+                top = bool.Parse(config.AppSettings.Settings["Top"].Value);
+                bottom = bool.Parse(config.AppSettings.Settings["Bottom"].Value);
+                right = bool.Parse(config.AppSettings.Settings["Right"].Value);
+                left = bool.Parse(config.AppSettings.Settings["Left"].Value);
+                borderc = bool.Parse(config.AppSettings.Settings["BorderC"].Value);
+                string lg = config.AppSettings.Settings["LG"].Value;
+                LGCHANGE(lg);
+
+                uzunluktrack.Value = size;
+                gaptrack.Value = gap;
+                kalinliktrack.Value = kalinlik;
+                rgbtrackR.Value = red;
+                rgbtrackG.Value = green;
+                rgbtrackB.Value = blue;
+                opaktrack.Value = Convert.ToInt32(opaklik * 100.0);
+                bordertrack.Value = border;
+
+                topbutton.BackColor = top ? Color.Lime : Color.Red;
+                bottombutton.BackColor = bottom ? Color.Lime : Color.Red;
+                rbutton.BackColor = right ? Color.Lime : Color.Red;
+                lbutton.BackColor = left ? Color.Lime : Color.Red;
+                bordercheck.Checked = borderc ? true : false;
+            }
+
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+            crossguncelle();
             sizelabel.Text = uzunluktrack.Value.ToString();
             gaplabel.Text = gaptrack.Value.ToString();
             kalinliklabel.Text = kalinliktrack.Value.ToString();
             borderlabel.Text = bordertrack.Value.ToString();
             opaklabel.Text = opaktrack.Value.ToString();
-            crossguncelle();
+            labelRed.Text = rgbtrackR.Value.ToString();
+            labelGreen.Text = rgbtrackG.Value.ToString();
+            labelBlue.Text = rgbtrackB.Value.ToString();
+            
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -218,7 +287,7 @@ namespace CrosshairCsharp
 
         private void CrosshairPanel_Paint(object sender, PaintEventArgs e)
         {
-            // Placeholder for custom paint logic (currently not used)
+            DrawCrosshair(e.Graphics, size, gap, kalinlik, renk, border);
         }
 
         /// <summary>
@@ -232,7 +301,7 @@ namespace CrosshairCsharp
         /// <param name="border">The thickness of the border around the crosshair.</param>
         private void DrawCrosshair(Graphics g, int size, int gap, int kalinlik, Color renk, int border)
         {
-            g.Clear(crosshairpanel1.BackColor); // Clear previous drawings
+            //g.Clear(crosshairpanel1.BackColor); // Clear previous drawings
 
             Pen pen = new Pen(renk, kalinlik)
             {
@@ -268,15 +337,12 @@ namespace CrosshairCsharp
 
         private void lgbutton_Click(object sender, EventArgs e)
         {
+            
             if (lgbutton.Text == "Türkçe")
             {
                 lgbutton.Text = "English";
                 ColorGB.Text = "Renk";
                 startbutton.Text = "Baþlat";
-                radioButton1.Text = "Kýrmýzý";
-                radioButton2.Text = "Yeþil";
-                radioButton3.Text = "Siyah";
-                radioButton4.Text = "Spring Yeþil";
                 bordercheck.Text = "Dýþ Çizgi Kalýnlýðý (4 Önerilir)";
                 label1.Text = "Uzunluk";
                 label2.Text = "Boþluk";
@@ -291,10 +357,6 @@ namespace CrosshairCsharp
                 lgbutton.Text = "Türkçe";
                 ColorGB.Text = "Color";
                 startbutton.Text = "Start";
-                radioButton1.Text = "Red";
-                radioButton2.Text = "Green";
-                radioButton3.Text = "Black";
-                radioButton4.Text = "Spring Green";
                 bordercheck.Text = "Border Scale (4 Recommended)";
                 label1.Text = "Length";
                 label2.Text = "Offset";
@@ -303,6 +365,98 @@ namespace CrosshairCsharp
                 label5.Text = "Red";
                 label6.Text = "Green";
                 label7.Text = "Blue";
+            }
+            SaveConfig();
+        }
+
+        void LGCHANGE(string e)
+        {
+            if (e == "English")
+            {
+                lgbutton.Text = "English";
+                ColorGB.Text = "Renk";
+                startbutton.Text = "Baþlat";
+                bordercheck.Text = "Dýþ Çizgi Kalýnlýðý (4 Önerilir)";
+                label1.Text = "Uzunluk";
+                label2.Text = "Boþluk";
+                label3.Text = "Kalýnlýk";
+                label4.Text = "Opaklýk";
+                label5.Text = "Kýrmýzý";
+                label6.Text = "Yeþil";
+                label7.Text = "Mavi";
+            }
+            else if (e == "Türkçe")
+            {
+                lgbutton.Text = "Türkçe";
+                ColorGB.Text = "Color";
+                startbutton.Text = "Start";
+                bordercheck.Text = "Border Scale (4 Recommended)";
+                label1.Text = "Length";
+                label2.Text = "Offset";
+                label3.Text = "Thickness";
+                label4.Text = "Opacity";
+                label5.Text = "Red";
+                label6.Text = "Green";
+                label7.Text = "Blue";
+            }
+            SaveConfig();
+        }
+
+        private void CreateDefaultConfig()
+        {
+            
+            var configContent = @"
+                <configuration>
+                    <appSettings>
+                        <add key='CrosshairColorR' value='255'/>
+                        <add key='CrosshairColorG' value='0'/>
+                        <add key='CrosshairColorB' value='0'/>
+                        <add key='Size' value='4'/>
+                        <add key='Gap' value='0'/>
+                        <add key='Thickness' value='2'/>
+                        <add key='Opacity' value='1,0'/>
+                        <add key='Border' value='4'/>
+                        <add key='Top' value='true'/>
+                        <add key='Bottom' value='true'/>
+                        <add key='Right' value='true'/>
+                        <add key='Left' value='true'/>
+                        <add key='BorderC' value='false'/>
+                        <add key='LG' value='Türkçe'/>
+                    </appSettings>
+                </configuration>";
+
+            File.WriteAllText(configPath, configContent);
+        }
+
+        private void SaveConfig()
+        {
+            try
+            {
+                ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configPath };
+                Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
+
+                config.AppSettings.Settings["CrosshairColorR"].Value = renk.R.ToString();
+                config.AppSettings.Settings["CrosshairColorG"].Value = renk.G.ToString();
+                config.AppSettings.Settings["CrosshairColorB"].Value = renk.B.ToString();
+                config.AppSettings.Settings["Size"].Value = uzunluktrack.Value.ToString();
+                config.AppSettings.Settings["Gap"].Value = gaptrack.Value.ToString();
+                config.AppSettings.Settings["Thickness"].Value = kalinliktrack.Value.ToString();
+                config.AppSettings.Settings["Opacity"].Value = (opaktrack.Value / 100.0).ToString();  // Opaklýk 0-1 arasý olmalý
+                config.AppSettings.Settings["Border"].Value = bordertrack.Value.ToString();
+                config.AppSettings.Settings["Top"].Value = top.ToString();
+                config.AppSettings.Settings["Bottom"].Value = bottom.ToString();
+                config.AppSettings.Settings["Right"].Value = right.ToString();
+                config.AppSettings.Settings["Left"].Value = left.ToString();
+                config.AppSettings.Settings["BorderC"].Value = bordercheck.Checked.ToString();
+                config.AppSettings.Settings["LG"].Value = lgbutton.Text;
+
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
