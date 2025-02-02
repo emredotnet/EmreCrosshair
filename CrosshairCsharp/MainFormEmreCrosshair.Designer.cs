@@ -68,6 +68,7 @@
             bordercheck = new CheckBox();
             bordertrack = new TrackBar();
             crosshairpanel1 = new Panel();
+            save = new Button();
             ((System.ComponentModel.ISupportInitialize)uzunluktrack).BeginInit();
             ColorGB.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)rgbtrackG).BeginInit();
@@ -83,7 +84,7 @@
             // 
             // startbutton
             // 
-            startbutton.Location = new Point(731, 189);
+            startbutton.Location = new Point(654, 189);
             startbutton.Name = "startbutton";
             startbutton.Size = new Size(121, 32);
             startbutton.TabIndex = 0;
@@ -114,7 +115,7 @@
             // emrelabel
             // 
             emrelabel.AutoSize = true;
-            emrelabel.Location = new Point(689, 171);
+            emrelabel.Location = new Point(674, 171);
             emrelabel.Name = "emrelabel";
             emrelabel.Size = new Size(83, 15);
             emrelabel.TabIndex = 3;
@@ -320,6 +321,7 @@
             // 
             // CrosshairGB
             // 
+            CrosshairGB.Controls.Add(save);
             CrosshairGB.Controls.Add(rbutton);
             CrosshairGB.Controls.Add(lbutton);
             CrosshairGB.Controls.Add(bottombutton);
@@ -391,7 +393,7 @@
             // 
             // lgbutton
             // 
-            lgbutton.Location = new Point(604, 189);
+            lgbutton.Location = new Point(781, 189);
             lgbutton.Name = "lgbutton";
             lgbutton.Size = new Size(121, 32);
             lgbutton.TabIndex = 21;
@@ -473,6 +475,16 @@
             crosshairpanel1.Size = new Size(311, 280);
             crosshairpanel1.TabIndex = 18;
             // 
+            // save
+            // 
+            save.Location = new Point(527, 189);
+            save.Name = "save";
+            save.Size = new Size(121, 32);
+            save.TabIndex = 26;
+            save.Text = "Save";
+            save.UseVisualStyleBackColor = true;
+            save.Click += save_Click;
+            // 
             // MainFormEmreCrosshair
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -543,5 +555,6 @@
         private Button lbutton;
         private Button bottombutton;
         private Button topbutton;
+        private Button save;
     }
 }

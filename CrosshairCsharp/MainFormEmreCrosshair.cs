@@ -9,10 +9,10 @@ namespace CrosshairCsharp
 {
     public partial class MainFormEmreCrosshair : Form
     {
-        private Color renk = Color.Red; // Default crosshair color
-        int border, size, gap, kalinlik; // Crosshair parameters
-        double opaklik; // Crosshair opacity
-        byte R, G, B; // RGB values for custom color
+        private Color renk = Color.Red;     // Default crosshair color
+        int border, size, gap, kalinlik;    // Crosshair parameters
+        double opaklik;                     // Crosshair opacity
+        byte R, G, B;                       // RGB values for custom color
         bool top = true, bottom = true, right = true, left = true, borderc = false;
         private string appDataPath;
         private string configPath;
@@ -71,7 +71,7 @@ namespace CrosshairCsharp
                 if (bordercheck.Checked) { border = bordertrack.Value; }
                 else border = 0;
 
-                EmreCrosshair crosshairform = new EmreCrosshair(size, gap, kalinlik, renk, border, opaklik,top,bottom,left,right);
+                EmreCrosshair crosshairform = new EmreCrosshair(size, gap, kalinlik, renk, border, opaklik, top, bottom, left, right);
                 crosshairform.Show();
                 this.Hide();
             }
@@ -88,11 +88,11 @@ namespace CrosshairCsharp
             {
                 if (File.Exists(configPath))
                 {
-                    SaveConfig();
+                    //SaveConfig();
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-            
+
             if (colorcheck())
             {
                 size = uzunluktrack.Value;
@@ -211,7 +211,7 @@ namespace CrosshairCsharp
 
         private void MainFormEmreCrosshair_Load(object sender, EventArgs e)
         {
-            
+
             try
             {
                 ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configPath };
@@ -254,6 +254,7 @@ namespace CrosshairCsharp
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
             crossguncelle();
+            SaveConfig();
             sizelabel.Text = uzunluktrack.Value.ToString();
             gaplabel.Text = gaptrack.Value.ToString();
             kalinliklabel.Text = kalinliktrack.Value.ToString();
@@ -262,7 +263,7 @@ namespace CrosshairCsharp
             labelRed.Text = rgbtrackR.Value.ToString();
             labelGreen.Text = rgbtrackG.Value.ToString();
             labelBlue.Text = rgbtrackB.Value.ToString();
-            
+
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -337,7 +338,7 @@ namespace CrosshairCsharp
 
         private void lgbutton_Click(object sender, EventArgs e)
         {
-            
+
             if (lgbutton.Text == "Türkçe")
             {
                 lgbutton.Text = "English";
@@ -404,7 +405,7 @@ namespace CrosshairCsharp
 
         private void CreateDefaultConfig()
         {
-            
+
             var configContent = @"
                 <configuration>
                     <appSettings>
@@ -482,6 +483,11 @@ namespace CrosshairCsharp
         {
             right = crosslineselect(rbutton);
             crossguncelle();
+        }
+
+        private void save_Click(object sender, EventArgs e)
+        {
+            SaveConfig();
         }
     }
 }

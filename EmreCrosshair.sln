@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmreCrosshair", "CrosshairCsharp\EmreCrosshair.csproj", "{0627A8A2-46BA-4E08-B64D-36E43CEA4223}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{72A118D3-D214-4D38-8224-85AEC8F00494}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupEC", "SetupEC\SetupEC.vdproj", "{BF3C5A0C-1581-4B6C-A5AF-9330F1F076AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +17,8 @@ Global
 		{0627A8A2-46BA-4E08-B64D-36E43CEA4223}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0627A8A2-46BA-4E08-B64D-36E43CEA4223}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0627A8A2-46BA-4E08-B64D-36E43CEA4223}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72A118D3-D214-4D38-8224-85AEC8F00494}.Debug|Any CPU.ActiveCfg = Debug
-		{72A118D3-D214-4D38-8224-85AEC8F00494}.Release|Any CPU.ActiveCfg = Release
+		{BF3C5A0C-1581-4B6C-A5AF-9330F1F076AC}.Debug|Any CPU.ActiveCfg = Debug
+		{BF3C5A0C-1581-4B6C-A5AF-9330F1F076AC}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
