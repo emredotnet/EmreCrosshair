@@ -7,7 +7,7 @@ This is a customizable crosshair overlay application developed in C#. It allows 
 Bu, C# ile geliştirilen özelleştirilebilir bir nişangâh kaplama uygulamasıdır. Kullanıcıların ekranlarında boyut, renk, kalınlık, boşluk, kenarlık ve opaklık dahil çeşitli özelleştirme seçenekleriyle bir nişangâh kaplaması oluşturmasına olanak tanır.
 
 # Install 
-![setup]([https://github.com/qweemree/EmreCrosshair/assets/164534188/7c6db0fd-cb7e-42fc-8e7a-fdeebbe3afde](https://github.com/emredotnet/EmreCrosshair/releases/download/release/SetupEC.msi))
+!setup([https://github.com/qweemree/EmreCrosshair/assets/164534188/7c6db0fd-cb7e-42fc-8e7a-fdeebbe3afde](https://github.com/emredotnet/EmreCrosshair/releases/download/release/SetupEC.msi))
 
 # Features / Özellikler
 - Customizable crosshair size / Özelleştirilebilir nişangâh boyutu
